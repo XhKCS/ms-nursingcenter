@@ -28,5 +28,21 @@ redis和JWT也被拆分到了该服务模块中，用于网关的鉴权，会拦
 ### (5) tool-server
 该模块为相对独立的公共工具服务模块，目前主要包括WebSocket与AI对话功能。
 
-非微服务的原版项目地址如下：
+## 接口文档及调试地址
+由于业务功能被划分成了三个服务模块，所以对应的接口文档也被划分成了三部分，通过不同的端口访问：
+### (1) core-server
+用户、客户、床位、退住登记、外出登记相应业务模块，接口文档地址为 http://localhost:11010/doc.html
+ 或  http://localhost:11010/swagger-ui/index.html
+
+### (2) nursing-server
+护理相应业务模块，接口文档地址为 http://localhost:11030/doc.html
+或  http://localhost:11030/swagger-ui/index.html
+
+### (3) meal-server
+膳食相应模块，接口文档地址为 http://localhost:11040/doc.html
+或  http://localhost:11040/swagger-ui/index.html
+
+
+
+本项目的非微服务版本地址如下：
 https://github.com/XhKCS/nursingcenter.git

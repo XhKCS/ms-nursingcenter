@@ -18,18 +18,34 @@ import java.util.function.Consumer;
 public class CustomerNursingServiceController {
     @Autowired
     private CustomerNursingServiceMapper customerNursingServiceMapper;
-
     @Autowired
     private NursingLevelMapper nursingLevelMapper;
-
     @Autowired
     private CustomerMapper customerMapper;
-
     @Autowired
     private LevelWithProgramMapper levelWithProgramMapper;
-
     @Autowired
     private NursingProgramMapper nursingProgramMapper;
+
+    public void setCustomerNursingServiceMapper(CustomerNursingServiceMapper customerNursingServiceMapper) {
+        this.customerNursingServiceMapper = customerNursingServiceMapper;
+    }
+
+    public void setNursingLevelMapper(NursingLevelMapper nursingLevelMapper) {
+        this.nursingLevelMapper = nursingLevelMapper;
+    }
+
+    public void setCustomerMapper(CustomerMapper customerMapper) {
+        this.customerMapper = customerMapper;
+    }
+
+    public void setLevelWithProgramMapper(LevelWithProgramMapper levelWithProgramMapper) {
+        this.levelWithProgramMapper = levelWithProgramMapper;
+    }
+
+    public void setNursingProgramMapper(NursingProgramMapper nursingProgramMapper) {
+        this.nursingProgramMapper = nursingProgramMapper;
+    }
 
     @PostMapping("/page")
     public PageResponseBean<List<CustomerNursingService>> pageWithConditions(@RequestBody Map<String, Object> request) {
@@ -83,6 +99,9 @@ public class CustomerNursingServiceController {
             }
             // 在客户的护理级别下选择
             Customer customer = customerMapper.selectById(customerId);
+            if (customer == null) {
+                return new PageResponseBean<>(500, "No data");
+            }
             NursingLevel nursingLevel = nursingLevelMapper.getByName(customer.getNursingLevelName());
             List<LevelWithProgram> levelWithProgramList = levelWithProgramMapper.listByLevelId(nursingLevel.getId());
             if (levelWithProgramList.isEmpty()) {

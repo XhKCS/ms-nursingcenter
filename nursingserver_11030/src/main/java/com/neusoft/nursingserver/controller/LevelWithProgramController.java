@@ -19,6 +19,14 @@ public class LevelWithProgramController {
     @Autowired
     private LevelWithProgramService levelWithProgramService;
 
+    public void setLevelWithProgramMapper(LevelWithProgramMapper levelWithProgramMapper) {
+        this.levelWithProgramMapper = levelWithProgramMapper;
+    }
+
+    public void setLevelWithProgramService(LevelWithProgramService levelWithProgramService) {
+        this.levelWithProgramService = levelWithProgramService;
+    }
+
     @PostMapping("/pageProgramsByLevelId")
     public PageResponseBean<List<NursingProgram>> pageProgramsByLevelId(@RequestBody Map<String, Object> request){
         int levelId = (int) request.get("levelId");
@@ -76,6 +84,20 @@ public class LevelWithProgramController {
         int programId = (int) request.get("programId");
         LevelWithProgram levelWithProgram = levelWithProgramMapper.getByLevelAndProgram(levelId, programId);
         int result = levelWithProgramMapper.deleteById(levelWithProgram.getId());
+        ResponseBean<Integer> rb =null;
+        if(result > 0) {
+            rb = new ResponseBean<>(result);
+        }else {
+            rb = new ResponseBean<>(500,"Fail to delete");
+        }
+
+        return rb;
+    }
+
+    @PostMapping("/deleteAllByProgramId")
+    public ResponseBean<Integer> deleteAllByProgramId(@RequestBody Map<String, Object> request) {
+        int programId = (int) request.get("programId");
+        int result = levelWithProgramMapper.deleteAllByProgramId(programId);
         ResponseBean<Integer> rb =null;
         if(result > 0) {
             rb = new ResponseBean<>(result);

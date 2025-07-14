@@ -34,6 +34,8 @@ public class UserController {
     @Autowired
     private GatewayFeignClient gatewayFeignClient;
 
+    public void setUserMapper(UserMapper userMapper) {this.userMapper = userMapper;}
+
     @PostMapping("/login")
     public ResponseBean<String> login(@RequestBody Map<String, Object> request, HttpServletRequest httpServletRequest) {
         String account = (String) request.get("account");
@@ -57,7 +59,6 @@ public class UserController {
                 String token = gatewayFeignClient.createToken(map);
                 System.out.println("生成相应token：" + token);
                 //	把令牌存入redis中一份，键为user-{userId}
-//                toolFeignClient.save("user-"+dbUser.getUserId().toString(), token);
                 map.clear();
                 map.put("key", "user-"+dbUser.getUserId().toString());
                 map.put("val", token);

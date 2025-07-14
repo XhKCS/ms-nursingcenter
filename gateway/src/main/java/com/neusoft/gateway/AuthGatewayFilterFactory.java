@@ -20,7 +20,7 @@ import java.util.Map;
 public class AuthGatewayFilterFactory implements GlobalFilter {
     private final String[] allowedRequests = {
             "/login", "/v3", "/swagger-ui", "/jwtController", "/redisController",
-            "/webjars", "/error", "/doc", "/ai"
+            "/webjars", "/error", "/doc"
     };
 
     @Autowired

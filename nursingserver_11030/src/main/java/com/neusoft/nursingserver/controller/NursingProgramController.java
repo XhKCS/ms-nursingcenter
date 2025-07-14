@@ -29,8 +29,16 @@ public class NursingProgramController {
     @Resource
     private NursingProgramStructOutputUtil nursingProgramStructOutputUtil;
 
+    public void setNursingProgramMapper(NursingProgramMapper nursingProgramMapper) {
+        this.nursingProgramMapper = nursingProgramMapper;
+    }
+
+    public void setNursingProgramService(NursingProgramServiceImpl nursingProgramService) {
+        this.nursingProgramService = nursingProgramService;
+    }
+
     @PostMapping("/pageAll")
-    public PageResponseBean<List<NursingProgram>> page(@RequestBody Map<String, Object> request) {
+    public PageResponseBean<List<NursingProgram>> pageAll(@RequestBody Map<String, Object> request) {
         int current = (int) request.get("current"); //当前页面
         int size = (int) request.get("size"); //一页的行数
 
@@ -69,7 +77,7 @@ public class NursingProgramController {
     // 多条件组合分页查询
     // 组合条件：项目名称、状态
     @PostMapping("/page")
-    public PageResponseBean<List<NursingProgram>> pageByStatus(@RequestBody Map<String, Object> request) {
+    public PageResponseBean<List<NursingProgram>> page(@RequestBody Map<String, Object> request) {
         int status = (int) request.get("status");
         String name = (String) request.get("name");
         int current = (int) request.get("current"); //当前页面

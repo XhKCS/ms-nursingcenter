@@ -49,7 +49,6 @@ public class CustomerNursingServiceController {
         IPage<CustomerNursingService> result = customerNursingServiceMapper.selectPage(page,qw);
         List<CustomerNursingService> list = result.getRecords();
         long total = result.getTotal();
-//        System.out.println(total);
 
         PageResponseBean<List<CustomerNursingService>> prb = null;
         if(total > 0){

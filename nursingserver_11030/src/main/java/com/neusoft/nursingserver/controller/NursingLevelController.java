@@ -27,6 +27,18 @@ public class NursingLevelController {
     @Autowired
     private ToolFeignClient toolFeignClient;
 
+    public void setNursingLevelMapper(NursingLevelMapper nursingLevelMapper) {
+        this.nursingLevelMapper = nursingLevelMapper;
+    }
+
+    public void setNursingLevelService(NursingLevelService nursingLevelService) {
+        this.nursingLevelService = nursingLevelService;
+    }
+
+    public void setToolFeignClient(ToolFeignClient toolFeignClient) {
+        this.toolFeignClient = toolFeignClient;
+    }
+
     @PostMapping("/listProgramsByLevelId")
     public ResponseBean<List<NursingProgram>> listProgramsByLevelId(@RequestBody Map<String, Object> request) {
         int levelId = (int) request.get("levelId");

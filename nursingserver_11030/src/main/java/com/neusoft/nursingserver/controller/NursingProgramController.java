@@ -7,6 +7,7 @@ import com.neusoft.nursingserver.entity.NursingProgram;
 import com.neusoft.nursingserver.entity.PageResponseBean;
 import com.neusoft.nursingserver.entity.ResponseBean;
 import com.neusoft.nursingserver.mapper.NursingProgramMapper;
+import com.neusoft.nursingserver.service.NursingProgramService;
 import com.neusoft.nursingserver.service.NursingProgramServiceImpl;
 import com.neusoft.nursingserver.util.NursingProgramStructOutputUtil;
 import jakarta.annotation.Resource;
@@ -24,7 +25,7 @@ public class NursingProgramController {
     private NursingProgramMapper nursingProgramMapper;
 
     @Autowired
-    private NursingProgramServiceImpl nursingProgramService;
+    private NursingProgramService nursingProgramService;
 
     @Resource
     private NursingProgramStructOutputUtil nursingProgramStructOutputUtil;
@@ -35,6 +36,24 @@ public class NursingProgramController {
 
     public void setNursingProgramService(NursingProgramServiceImpl nursingProgramService) {
         this.nursingProgramService = nursingProgramService;
+    }
+
+    @PostMapping("/getPurchaseByProgramIdAndDate")
+    public ResponseBean<Integer> getPurchaseByIdAndTime(@RequestBody Map<String, Object> request) {
+        int programId = (int) request.get("programId");
+        String startDate = (String) request.get("startDate");
+        String endDate = (String) request.get("endDate");
+
+        int purchaseCount = nursingProgramService.getPurchaseByProgramIdAndDate(programId,startDate,endDate);
+
+        ResponseBean<Integer> rb = null;
+
+        if(purchaseCount >= 0) {
+            rb = new ResponseBean<>(purchaseCount);
+        }else {
+            rb = new ResponseBean<>(500,"Fail to get");
+        }
+        return rb;
     }
 
     @PostMapping("/pageAll")

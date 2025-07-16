@@ -1,5 +1,7 @@
 package com.neusoft.nursingserver.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.neusoft.nursingserver.entity.CustomerNursingService;
 import com.neusoft.nursingserver.entity.LevelWithProgram;
 import com.neusoft.nursingserver.entity.NursingProgram;
 import com.neusoft.nursingserver.mapper.*;
@@ -7,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -72,6 +76,30 @@ public class NursingProgramServiceImpl implements NursingProgramService{
         // 返回最终更新结果
         nursingProgram.setIsDeleted(true);
         return nursingProgramMapper.updateById(nursingProgram);
+    }
+
+    @Override
+    public int getPurchaseByProgramIdAndDate(int programId, String startDate, String endDate) {
+        List<CustomerNursingService> customerNursingServiceList = customerNursingServiceMapper.listByProgramId(programId);
+        int count = 0;
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date stDate = sdf.parse(startDate);
+            Date edDate = sdf.parse(endDate);
+            System.out.println(stDate);
+            System.out.println(edDate);
+            for (CustomerNursingService customerNursingService : customerNursingServiceList) {
+                Date date = sdf.parse(customerNursingService.getPurchaseDate());
+                System.out.println("date: "+date);
+                if (date.after(stDate) && date.before(edDate)) {
+                    count += customerNursingService.getTotalCount();
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Exception happened: "+e.getMessage());
+        }
+        System.out.println("count: "+count);
+        return count;
     }
 
 }

@@ -43,7 +43,7 @@ public class NursingProgramStructOutputUtil {
 //			promptUserSpec是用户要求AI提供输出格式的提示词
         String promptUserSpec = """
                 format: 根据用户的要求以纯文本输出一个护理项目的 json，包含9个字段：
-                id（固定为0）, programCode（编号，不能与已有的重复）, name（名称）, price（单价）, status（默认为1）, executionPeriod（执行周期，例如：每天/三天一次/每周/每月/...）, executionTimes（每个周期的执行次数，数字）, description（描述）, isDeleted（默认为0）；
+                id（固定为0）, programCode（编号，需要以HLXM开头，后面接的数字从0010开始，不能与已有的重复）, name（名称）, price（单价）, status（默认为1）, executionPeriod（执行周期，例如：每天/三天一次/每周/每月/...）, executionTimes（每个周期的执行次数，数字）, description（描述）, isDeleted（默认为0）；
                 请不要包含任何多余的文字——包括 markdown 格式;
                 以下是输入和输出示例：
                 inputExample: 给我添加一个护理项目：按摩;
